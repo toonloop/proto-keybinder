@@ -1,4 +1,4 @@
-DEPS=clutter-1.0
+DEPS=clutter-1.0 libxml-2.0
 CFLAGS=`pkg-config --cflags $(DEPS)`
 LIBS=`pkg-config --libs $(DEPS)`
 
