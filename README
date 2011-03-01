@@ -1,0 +1,3 @@
+This is just a prototype for now. It will end up in Toonloop.
+
+I could also be packaged by itself, but we will see. It would be better to write a JSON parser in C for its inclusion in Clutter.
