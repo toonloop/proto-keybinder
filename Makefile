@@ -1,14 +1,19 @@
 DEPS=clutter-1.0 libxml-2.0
-CFLAGS=`pkg-config --cflags $(DEPS)`
+CXXFLAGS=`pkg-config --cflags $(DEPS)` -Wall -Werror -Wfatal-errors -Wextra -O2
 LIBS=`pkg-config --libs $(DEPS)`
+OBJS=main.o
 
 all: run
 
-main.o: main.cpp
-	g++ -Wall -g $(CFLAGS) main.cpp -c -o main.o
+ifeq ($(shell uname -s),Darwin)
+  CXXFLAGS += -DDARWIN
+endif
 
-run: main.o
-	g++ -Wall -g $(LIBS) main.o -o run
+%.o : %.cpp %.h
+	$(CC) -c $(CXXFLAGS) $< -o $@
+
+run: $(OBJS)
+	g++ -g $(LIBS) $^ -o $@
 
 .PHONY: clean
 

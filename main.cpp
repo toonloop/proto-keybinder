@@ -6,6 +6,8 @@
 static const gint WIN_W = 640;
 static const gint WIN_H = 480;
 
+#define UNUSED(x) ((void) (x))
+
 typedef struct app_
 {
     ClutterActor *rectangle;
@@ -13,6 +15,7 @@ typedef struct app_
 
 static void key_event_cb(ClutterActor *actor, ClutterKeyEvent *event, gpointer data)
 {
+    UNUSED(actor);
     App *self = static_cast<App *>(data);
     (void) self;
     switch (event->keyval)
