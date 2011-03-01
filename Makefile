@@ -1,7 +1,7 @@
 DEPS=clutter-1.0 libxml-2.0
 CXXFLAGS=`pkg-config --cflags $(DEPS)` -Wall -Werror -Wfatal-errors -Wextra -O2
 LIBS=`pkg-config --libs $(DEPS)`
-OBJS=main.o
+OBJS=main.o keybinder.o
 
 all: run
 
@@ -10,7 +10,7 @@ ifeq ($(shell uname -s),Darwin)
 endif
 
 %.o : %.cpp %.h
-	$(CC) -c $(CXXFLAGS) $< -o $@
+	g++ -c $(CXXFLAGS) $< -o $@
 
 run: $(OBJS)
 	g++ -g $(LIBS) $^ -o $@

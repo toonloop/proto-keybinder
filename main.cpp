@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <tr1/memory>
+#include "keybinder.h"
 
 static const gint WIN_W = 640;
 static const gint WIN_H = 480;
@@ -17,120 +18,6 @@ typedef struct app_
     ClutterActor *rectangle;
 } App;
 
-/**
- * Component for a keyboard shortcut.
- */
-class AbstractKey
-{
-    public:
-        virtual std::string get_value() = 0;
-};
-
-/**
- * Letter component for a keyboard shortcut.
- */
-class Key : public AbstractKey
-{
-    public:
-        Key(const std::string &key_name);
-        virtual std::string get_value();
-    private:
-        std::string key_name_;
-};
-
-Key::Key(const std::string &key_name) :
-    key_name_(key_name)
-{
-}
-
-std::string Key::get_value()
-{
-    return key_name_;
-}
-
-/**
- * Modifier component for a keyboard shortcut.
- */
-class ModifierKey : public AbstractKey
-{
-    public:
-        ModifierKey(const std::string &modifier_name);
-        virtual std::string get_value();
-    private:
-        std::string modifier_name_;
-};
-
-ModifierKey::ModifierKey(const std::string &modifier_name) :
-    modifier_name_(modifier_name)
-{
-}
-
-std::string ModifierKey::get_value()
-{
-    return modifier_name_;
-}
-
-/**
- * One key binding rule.
- */
-class KeyRule
-{
-    public:
-        KeyRule();
-        /**
-         * Can be any letter, number or some other key.
-         */
-        void add_key(const std::string &key_name);
-        void add_modifier(const std::string &modifier);
-        //TODO: void set_action(const std::string &name, const std::string &argument);
-        void print();
-    private:
-        std::vector<std::tr1::shared_ptr<AbstractKey> > keys_;
-};
-
-KeyRule::KeyRule() :
-    keys_()
-{
-}
-
-void KeyRule::add_key(const std::string &key_name)
-{
-    std::tr1::shared_ptr<AbstractKey> key(new Key(key_name));
-    keys_.push_back(key);
-}
-
-void KeyRule::add_modifier(const std::string &modifier)
-{
-    std::tr1::shared_ptr<AbstractKey> key(new ModifierKey(modifier));
-    keys_.push_back(key);
-}
-
-void KeyRule::print()
-{
-    for (std::vector<std::tr1::shared_ptr<AbstractKey> >::const_iterator iter = keys_.begin(); iter != keys_.end(); ++iter)
-    {
-        std::cout << iter->get()->get_value() << " ";
-    }
-    std::cout << std::endl;
-}
-
-class KeyBinder
-{
-    public:
-        KeyBinder()
-        {
-        }
-        KeyRule *add_rule();
-    private:
-        std::vector<std::tr1::shared_ptr<KeyRule> > rules_;
-};
-
-KeyRule *KeyBinder::add_rule()
-{
-    std::tr1::shared_ptr<KeyRule> rule_ptr(new KeyRule);
-    rules_.push_back(rule_ptr);
-    return rule_ptr.get();
-}
 
 void create_stuff()
 {
