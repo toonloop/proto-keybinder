@@ -2,10 +2,6 @@
  * Prototype for key stuff
  */
 #include <clutter/clutter.h>
-#include <string>
-#include <vector>
-#include <iostream>
-#include <tr1/memory>
 #include "keybinder.h"
 
 static const gint WIN_W = 640;
@@ -17,7 +13,6 @@ typedef struct app_
 {
     ClutterActor *rectangle;
 } App;
-
 
 void create_stuff()
 {
@@ -57,7 +52,6 @@ int main(int argc, char *argv[])
     clutter_stage_set_title(CLUTTER_STAGE(stage), "Key binder proto");
     clutter_stage_set_color(CLUTTER_STAGE(stage), &black);
     clutter_actor_set_size(stage, WIN_W, WIN_H);
-
 
     App *self = g_new0(App, 1);
     create_stuff();
